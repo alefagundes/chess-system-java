@@ -19,13 +19,17 @@ public class Program {
 				UI.clearScreen();
 				UI.printBoard(chessMatch.getPieces());
 				System.out.println();
-				System.out.println("Source: ");
+				System.out.print("Source: ");
 				ChessPosition source = UI.readChessPosition(sc);
 
 				System.out.println();
-				System.out.println("Taget: ");
+				System.out.print("Taget: ");
 				ChessPosition target = UI.readChessPosition(sc);
-
+				
+				boolean[][] possibleMoves = chessMatch.possibleMoves(source);
+				UI.clearScreen();
+				UI.printBoard(chessMatch.getPieces(), possibleMoves);
+				
 				ChessPiece capturedPiece = chessMatch.performChessMove(source, target);
 			
 			} catch (ChessExeption e) {
