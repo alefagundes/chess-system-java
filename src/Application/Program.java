@@ -24,30 +24,28 @@ public class Program {
 				System.out.println();
 				System.out.print("Source: ");
 				ChessPosition source = UI.readChessPosition(sc);
-
-				boolean[][] possibleMoves = chessMatch.possibleMoves(source);
 				
+				boolean[][] possibleMoves = chessMatch.possibleMoves(source);
 				UI.clearScreen();
 				UI.printBoard(chessMatch.getPieces(), possibleMoves);
 				System.out.println();
-				System.out.print("Taget: ");
+				System.out.print("Target: ");
 				ChessPosition target = UI.readChessPosition(sc);
 				
 				ChessPiece capturedPiece = chessMatch.performChessMove(source, target);
 				
-				
-				if(captured != null) {
+				if (capturedPiece != null) {
 					captured.add(capturedPiece);
 				}
-			
-			} catch (ChessExeption e) {
-				System.out.println(e.getMessage());
-				sc.nextLine();
-			}catch(InputMismatchException e) {
+			}
+			catch (ChessExeption e) {
 				System.out.println(e.getMessage());
 				sc.nextLine();
 			}
-
+			catch (InputMismatchException e) {
+				System.out.println(e.getMessage());
+				sc.nextLine();
+			}
 		}
 
 	}
