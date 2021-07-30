@@ -2,13 +2,16 @@ package chess.pieces;
 
 import bordgame.Board;
 import bordgame.Position;
+import chess.ChessMatch;
 import chess.ChessPiece;
 import chess.Color;
 
 public class Pawn extends ChessPiece{
+	private ChessMatch chessMatch;
 
-	public Pawn(Board board, Color color) {
+	public Pawn(Board board, Color color, ChessMatch chessMatch) {
 		super(board, color);
+		this.chessMatch = chessMatch;
 	}
 	
 	@Override
@@ -33,6 +36,17 @@ public class Pawn extends ChessPiece{
 			if(getBoard().positionExists(p) && isThereOponentPiece(p)) {
 				mat[p.getRow()][p.getColum()] = true;
 			}
+			// En Passant White
+			if(position.getRow()==3) {
+				Position left = new Position(position.getRow(), position.getColum()-1);
+				if(getBoard().positionExists(left) && isThereOponentPiece(left) && getBoard().piece(left)==chessMatch.getEnPassantVunerable()) {
+					mat[left.getRow()-1][left.getColum()] = true;
+				}
+				Position right = new Position(position.getRow(), position.getColum()+1);
+				if(getBoard().positionExists(right) && isThereOponentPiece(right) && getBoard().piece(right)==chessMatch.getEnPassantVunerable()) {
+					mat[right.getRow()-1][right.getColum()] = true;
+				}
+			}
 		}
 		else {	
 			p.setValues(position.getRow() + 1, position.getColum());
@@ -53,6 +67,18 @@ public class Pawn extends ChessPiece{
 			if (getBoard().positionExists(p) && isThereOponentPiece(p)) {
 				mat[p.getRow()][p.getColum()] = true;
 			}
+			// En Passant Black
+			if (position.getRow() == 4) {
+				Position left = new Position(position.getRow(), position.getColum() - 1);
+				if (getBoard().positionExists(left) && isThereOponentPiece(left) && getBoard().piece(left) == chessMatch.getEnPassantVunerable()) {
+					mat[left.getRow() + 1][left.getColum()] = true;
+				}
+				Position right = new Position(position.getRow(), position.getColum() + 1);
+				if (getBoard().positionExists(right) && isThereOponentPiece(right) && getBoard().piece(right) == chessMatch.getEnPassantVunerable()) {
+					mat[right.getRow() + 1][right.getColum()] = true;
+				}
+			}
+			
 		}
 		return mat;
 	}
